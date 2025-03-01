@@ -8,6 +8,8 @@ IFLAGS := -Iinclude
 # Executable setup
 NAME := philo
 SRC_FILES := \
+	$(SRC_DIR)/libft/ft_atoi.c \
+	$(SRC_DIR)/init.c \
 	$(SRC_DIR)/main.c
 OBJ_FILES := $(SRC_FILES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
