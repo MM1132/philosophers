@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreimann <rreimann@42heilbronn.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/01 03:19:26 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/01 21:08:56 by rreimann         ###   ########.fr       */
+/*   Created: 2025/03/01 21:02:31 by rreimann          #+#    #+#             */
+/*   Updated: 2025/03/01 21:04:55 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
-
-void	gc_free(t_philo *philo, void *pointer)
+int	ft_isspace(char c)
 {
-	t_list	*current;
-
-	current = philo->allocs;
-	while (current->content)
-	{
-		if (current->content == pointer)
-		{
-			ft_lstdelone(current, free);
-		}
-		if (!current->next)
-			return ;
-		current = current->next;
-	}
-}
-
-void	gc_exit(t_philo *philo, int exit_status)
-{
-	ft_lstclear(&philo->allocs, free);
-	exit(exit_status);
+	return (
+		c == '\t' || \
+		c == '\n' || \
+		c == '\v' || \
+		c == '\f' || \
+		c == '\r' || \
+		c == ' '
+	);
 }

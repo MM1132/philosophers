@@ -8,6 +8,13 @@ IFLAGS := -Iinclude
 # Executable setup
 NAME := philo
 SRC_FILES := \
+	$(SRC_DIR)/garbage_collector/free.c \
+	$(SRC_DIR)/garbage_collector/malloc.c \
+	$(SRC_DIR)/libft/check_char/ft_isdigit_str.c \
+	$(SRC_DIR)/libft/check_char/ft_isdigit.c \
+	$(SRC_DIR)/libft/check_char/ft_isspace.c \
+	$(SRC_DIR)/libft/linked_list/part1.c \
+	$(SRC_DIR)/libft/linked_list/part2.c \
 	$(SRC_DIR)/libft/ft_atoi.c \
 	$(SRC_DIR)/init.c \
 	$(SRC_DIR)/main.c

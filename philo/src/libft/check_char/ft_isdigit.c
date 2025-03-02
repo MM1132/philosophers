@@ -1,36 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreimann <rreimann@42heilbronn.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/01 03:19:26 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/01 21:08:56 by rreimann         ###   ########.fr       */
+/*   Created: 2024/10/04 14:25:04 by rreimann          #+#    #+#             */
+/*   Updated: 2025/03/01 21:04:33 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
-
-void	gc_free(t_philo *philo, void *pointer)
+int	ft_isdigit(int c)
 {
-	t_list	*current;
-
-	current = philo->allocs;
-	while (current->content)
-	{
-		if (current->content == pointer)
-		{
-			ft_lstdelone(current, free);
-		}
-		if (!current->next)
-			return ;
-		current = current->next;
-	}
-}
-
-void	gc_exit(t_philo *philo, int exit_status)
-{
-	ft_lstclear(&philo->allocs, free);
-	exit(exit_status);
+	return (c >= '0' && c <= '9');
 }

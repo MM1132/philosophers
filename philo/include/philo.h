@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@42heilbronn.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 02:24:15 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/01 04:14:08 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:37:31 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@ void	gc_free(t_philo *philo, void *pointer);
 void	gc_exit(t_philo *philo, int exit_status);
 
 // LIBFT FUNCTIONS
+int		ft_isspace(char c);
+int		ft_isdigit(int c);
+int		ft_isposdigit_str(char *str);
 long	ft_atoi(const char *str);
 // Linked Lists
 t_list	*ft_lstnew(void *content);
