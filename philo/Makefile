@@ -26,6 +26,9 @@ all: $(NAME)
 $(NAME): $(OBJ_FILES)
 	$(CC) $(CFLAGS) $(OBJ_FILES) -o $(NAME)
 
+debug: $(OBJ_FILES)
+	$(CC) -g $(CFLAGS) $(OBJ_FILES) -o $(NAME)_debug
+
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@

@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@42heilbronn.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 03:19:26 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/01 21:08:56 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/05 23:02:38 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,24 @@
 void	gc_free(t_philo *philo, void *pointer)
 {
 	t_list	*current;
+	t_list	*previous;
 
 	current = philo->allocs;
+	previous = NULL;
 	while (current->content)
 	{
 		if (current->content == pointer)
 		{
+			if (previous)
+				previous->next = current->next;
+			else
+				philo->allocs = current->next;
 			ft_lstdelone(current, free);
+			break ;
 		}
 		if (!current->next)
-			return ;
+			break ;
+		previous = current;
 		current = current->next;
 	}
 }

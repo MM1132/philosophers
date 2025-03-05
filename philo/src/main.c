@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@42heilbronn.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 21:40:16 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/01 23:31:52 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:53:01 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,19 @@ void	print_philo_data(t_philo *philo)
 int	main(int argc, char **argv)
 {
 	t_philo	philo;
+	int		*forks;
 
 	philo = init_philo(argc, argv);
 	print_philo_data(&philo);
+	forks = gc_malloc(&philo, sizeof(int) * philo.number_of_philosophers);
+	*forks = 5;
+	printf("Forks: %d\n", *forks);
+
+	printf("From list: \n");
+	printf("%d\n", *((int *)philo.allocs->content));
+
+	printf("Freeing forks now...\n");
+	gc_free(&philo, forks);
+
 	return (0);
 }

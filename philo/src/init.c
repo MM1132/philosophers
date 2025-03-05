@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@42heilbronn.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 22:44:19 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/02 17:43:42 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/02 18:59:34 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ t_philo	init_philo(int argc, char **argv)
 	philo.number_of_times_each_philosopher_must_eat = 0;
 	if (argc == 6)
 		philo.number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
+	philo.allocs = NULL;
 	return (philo);
 }
