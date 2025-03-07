@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@42heilbronn.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 03:19:26 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/05 23:02:38 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:32:04 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,13 @@ void	gc_free(t_philo *philo, void *pointer)
 	}
 }
 
-void	gc_exit(t_philo *philo, int exit_status)
+void	gc_free_all(t_philo *philo)
 {
 	ft_lstclear(&philo->allocs, free);
+}
+
+void	gc_exit(t_philo *philo, int exit_status)
+{
+	gc_free_all(philo);
 	exit(exit_status);
 }

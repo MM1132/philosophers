@@ -6,16 +6,12 @@
 /*   By: rreimann <rreimann@42heilbronn.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 23:49:49 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/05 22:53:47 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/05 23:29:19 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/*
-
-*/
-//! Segmentation Fault
 void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
 	if (!lst)

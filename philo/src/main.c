@@ -6,39 +6,66 @@
 /*   By: rreimann <rreimann@42heilbronn.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 21:40:16 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/05 22:53:01 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/07 01:33:17 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_philo_data(t_philo *philo)
+pthread_t	start_time_thread(t_philo *philo)
 {
-	printf("PHILO DATA:\n");
-	printf("number_of_philosophers: %zu\n", philo->number_of_philosophers);
-	printf("time_to_die: %zu\n", philo->time_to_die);
-	printf("time_to_eat: %zu\n", philo->time_to_eat);
-	printf("time_to_sleep: %zu\n", philo->time_to_sleep);
-	printf("the long one: %zu\n",
-		philo->number_of_times_each_philosopher_must_eat);
+	pthread_t			time_thread;
+
+	pthread_create(&time_thread, NULL, time_counter, (void *) philo);
+	return (time_thread);
+}
+
+void	start_philo_threads(t_philo *philo)
+{
+	size_t				index;
+	t_philo_loop_props	*main_loop_props;
+
+	// printf("Original: %zu\n", philo->start_time_ms);
+	gc_malloc(philo, sizeof(int));
+	// printf("After gc_malloc: %zu\n", philo->start_time_ms);
+	index = 0;
+	while (index < philo->number_of_philosophers)
+	{
+		main_loop_props = gc_malloc(philo, sizeof(t_philo_loop_props));
+		main_loop_props->philosopher = index;
+		main_loop_props->philo = philo;
+		// printf("Another start ms: %zu\n", main_loop_props->philo->start_time_ms);
+		pthread_create(&philo->philosophers[index], NULL, \
+			philosopher_loop, (void *)main_loop_props);
+		index++;
+	}
+}
+
+void	start(t_philo *philo)
+{
+	size_t		index;
+	pthread_t	time_thread;
+
+	time_thread = start_time_thread(philo);
+	start_philo_threads(philo);
+	pthread_join(time_thread, NULL);
+	index = 0;
+	while (index < philo->number_of_philosophers)
+	{
+		pthread_join(philo->philosophers[index], NULL);
+		printf("Joined philosopher %zu\n", index);
+		index++;
+	}
 }
 
 int	main(int argc, char **argv)
 {
-	t_philo	philo;
-	int		*forks;
+	t_philo				philo;
 
 	philo = init_philo(argc, argv);
 	print_philo_data(&philo);
-	forks = gc_malloc(&philo, sizeof(int) * philo.number_of_philosophers);
-	*forks = 5;
-	printf("Forks: %d\n", *forks);
+	start(&philo);
 
-	printf("From list: \n");
-	printf("%d\n", *((int *)philo.allocs->content));
-
-	printf("Freeing forks now...\n");
-	gc_free(&philo, forks);
-
+	gc_free_all(&philo);
 	return (0);
 }

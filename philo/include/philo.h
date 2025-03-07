@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@42heilbronn.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 02:24:15 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/02 17:37:31 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/07 02:07:35 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define PHILO_H
 # include <stdio.h>
 # include <stdlib.h>
+# include <pthread.h>
+# include <sys/time.h>
+# include <stdbool.h>
+# include <unistd.h>
 
 // {: LIFBT TYPES
 
@@ -27,27 +31,42 @@ typedef struct s_list
 
 typedef enum e_philo_state
 {
-	EATING,
-	SLEEPING,
-	THINKING,
-}					t_philo_state;
+	PHILO_EATING,
+	PHILO_SLEEPING,
+	PHILO_THINKING,
+}	t_philo_state;
 
 typedef struct s_philosopher
 {
 	t_philo_state	state;
-}					t_philosopher;
+}	t_philosopher;
 
 typedef struct s_philo
 {
-	size_t	number_of_philosophers;
-	size_t	time_to_die;
-	size_t	time_to_eat;
-	size_t	time_to_sleep;
-	size_t	number_of_times_each_philosopher_must_eat;
-	t_list	*allocs;
-	short	*forks;
-}			t_philo;
+	size_t			number_of_philosophers;
+	size_t			time_to_die;
+	size_t			time_to_eat;
+	size_t			time_to_sleep;
+	size_t			number_of_times_each_philosopher_must_eat;
+	size_t			start_time_ms;
+	size_t			elapsed_time_ms;
+	t_list			*allocs;
+	pthread_mutex_t	*fork_mutexes;
+	pthread_t		*philosophers;
+}					t_philo;
 
+typedef struct s_philo_loop_props
+{
+	t_philo	*philo;
+	size_t	philosopher;
+}	t_philo_loop_props;
+
+void	ft_usleep(size_t sleep_time);
+size_t	get_time_from_start(t_philo *philo);
+void	*time_counter(void *props);
+void	*philosopher_loop(void *p);
+void	print_philo_data(t_philo *philo);
+size_t	get_time_in_ms(void);
 t_philo	init_philo(int argc, char **argv);
 
 // GARBAGE COLLECTOR
@@ -58,6 +77,8 @@ void	*gc_malloc(t_philo *philo, size_t size);
 // Loop through all the allocations and find the matching one
 // Free it and delete the node from the list of allocations
 void	gc_free(t_philo *philo, void *pointer);
+// Free everything that has ever been allocated by the garbage collector
+void	gc_free_all(t_philo *philo);
 // Free everything and exit out of the program
 void	gc_exit(t_philo *philo, int exit_status);
 
