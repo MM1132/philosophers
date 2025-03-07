@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rreimann <rreimann@42heilbronn.de>         +#+  +:+       +#+        */
+/*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 22:44:19 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/07 02:09:30 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/07 14:44:34 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,6 @@ t_philo	init_philo(int argc, char **argv)
 	philo.allocs = NULL;
 	philo_pthread_init(&philo);
 	philo.elapsed_time_ms = 0;
-	printf("Initializing start_time_ms: %zu\n", get_time_in_ms());
-	// We are adding the +5 ms to the start time so that all
-	// the philospher threads have equal time to start
 	philo.start_time_ms = get_time_in_ms() + 5;
 	return (philo);
 }

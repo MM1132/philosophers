@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rreimann <rreimann@42heilbronn.de>         +#+  +:+       +#+        */
+/*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 21:40:16 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/07 02:30:28 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:40:57 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,26 @@ void	start_philo_threads(t_philo *philo)
 {
 	size_t				index;
 	t_philo_loop_props	*main_loop_props;
+	size_t				other_index;
+	t_philosopher		philospher;
 
-	// printf("Original: %zu\n", philo->start_time_ms);
-	gc_malloc(philo, sizeof(int));
-	// printf("After gc_malloc: %zu\n", philo->start_time_ms);
 	index = 0;
 	while (index < philo->number_of_philosophers)
 	{
 		main_loop_props = gc_malloc(philo, sizeof(t_philo_loop_props));
-		main_loop_props->philosopher = index;
 		main_loop_props->philo = philo;
-		// printf("Another start ms: %zu\n", main_loop_props->philo->start_time_ms);
+		other_index = index + 1;
+		if (other_index > philo->number_of_philosophers - 1)
+			other_index = 0;
+		philospher.left_fork = &philo->fork_mutexes[index];
+		philospher.right_fork = &philo->fork_mutexes[other_index];
+		if (index % 2 == 0)
+		{
+			philospher.left_fork = &philo->fork_mutexes[other_index];
+			philospher.right_fork = &philo->fork_mutexes[index];
+		}
+		philospher.number = index + 1;
+		main_loop_props->philosopher = philospher;
 		pthread_create(&philo->philosophers[index], NULL, \
 			philosopher_loop, (void *)main_loop_props);
 		index++;
@@ -63,7 +72,7 @@ int	main(int argc, char **argv)
 	t_philo				philo;
 
 	philo = init_philo(argc, argv);
-	print_philo_data(&philo);
+	// print_philo_data(&philo);
 	start(&philo);
 
 	gc_free_all(&philo);

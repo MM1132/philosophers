@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rreimann <rreimann@42heilbronn.de>         +#+  +:+       +#+        */
+/*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 02:24:15 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/07 02:07:35 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:08:17 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,6 @@ typedef enum e_philo_state
 	PHILO_THINKING,
 }	t_philo_state;
 
-typedef struct s_philosopher
-{
-	t_philo_state	state;
-}	t_philosopher;
-
 typedef struct s_philo
 {
 	size_t			number_of_philosophers;
@@ -55,12 +50,21 @@ typedef struct s_philo
 	pthread_t		*philosophers;
 }					t_philo;
 
+typedef struct s_philosopher
+{
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
+	size_t			number;
+	size_t			last_meal_time;
+}					t_philosopher;
+
 typedef struct s_philo_loop_props
 {
-	t_philo	*philo;
-	size_t	philosopher;
-}	t_philo_loop_props;
+	t_philo			*philo;
+	t_philosopher	philosopher;
+}					t_philo_loop_props;
 
+void	sleep_until_time(size_t	target_time);
 void	ft_usleep(size_t sleep_time);
 size_t	get_time_from_start(t_philo *philo);
 void	*time_counter(void *props);

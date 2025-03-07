@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rreimann <rreimann@42heilbronn.de>         +#+  +:+       +#+        */
+/*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 19:48:28 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/07 02:07:20 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/07 12:32:03 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,11 @@ void	ft_usleep(size_t sleep_time)
 	
 	start_time = get_time_in_ms();
 	while ((get_time_in_ms() - start_time) < sleep_time)
+		usleep(100);
+}
+
+void	sleep_until_time(size_t	target_time)
+{
+	while (get_time_in_ms() < target_time)
 		usleep(100);
 }
