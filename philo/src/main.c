@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
+/*   By: rreimann <rreimann@42heilbronn.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 21:40:16 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/07 15:40:57 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:06:29 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,34 @@ pthread_t	start_time_thread(t_philo *philo)
 
 void	start_philo_threads(t_philo *philo)
 {
-	size_t				index;
+	int					index;
 	t_philo_loop_props	*main_loop_props;
-	size_t				other_index;
+	int					left_index;
 	t_philosopher		philospher;
 
 	index = 0;
-	while (index < philo->number_of_philosophers)
+	while (index < (int) philo->number_of_philosophers)
 	{
+		// Init
 		main_loop_props = gc_malloc(philo, sizeof(t_philo_loop_props));
 		main_loop_props->philo = philo;
-		other_index = index + 1;
-		if (other_index > philo->number_of_philosophers - 1)
-			other_index = 0;
-		philospher.left_fork = &philo->fork_mutexes[index];
-		philospher.right_fork = &philo->fork_mutexes[other_index];
+
+		// Set indexes of forks
+		left_index = index - 1;
+		if (left_index < 0)
+			left_index = philo->number_of_philosophers - 1;
+		
+		philospher.right_fork = &philo->fork_mutexes[index];
+		philospher.left_fork = &philo->fork_mutexes[left_index];
+
+		// Swap
 		if (index % 2 == 0)
 		{
-			philospher.left_fork = &philo->fork_mutexes[other_index];
-			philospher.right_fork = &philo->fork_mutexes[index];
+			philospher.right_fork = &philo->fork_mutexes[left_index];
+			philospher.left_fork = &philo->fork_mutexes[index];
 		}
+
+		// Finish
 		philospher.number = index + 1;
 		main_loop_props->philosopher = philospher;
 		pthread_create(&philo->philosophers[index], NULL, \

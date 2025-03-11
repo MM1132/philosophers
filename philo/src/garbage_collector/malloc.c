@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@42heilbronn.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 02:35:32 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/07 01:32:23 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/09 18:43:33 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,9 @@ void	*gc_malloc(t_philo *philo, size_t size)
 		free(allocated_memory);
 		exit_msg(philo, "Malloc failed\n", EXIT_FAILURE);
 	}
-	// printf("BEFORE gc_malloc:\n");
-	// print_philo_data(philo);
 	if (philo->allocs == NULL)
 		philo->allocs = new_element;
 	else
 		ft_lstadd_front(&(philo->allocs), new_element);
-	// printf("AFTER gc_malloc:\n");
-	// print_philo_data(philo);
 	return (allocated_memory);
 }
