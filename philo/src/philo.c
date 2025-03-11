@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rreimann <rreimann@42heilbronn.de>         +#+  +:+       +#+        */
+/*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:18:05 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/11 02:32:05 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:39:08 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,13 @@ static void	eating(t_philo_loop_props	*props)
 {
 	// First, the philosopher tries to pick up the two forks
 	pthread_mutex_lock(props->philosopher.right_fork);
-	printf("%zu %zu has taken a fork\n", \
-		get_time_from_start(props->philo), props->philosopher.number);
+	mutex_print(props->philo, &props->philosopher, PHILO_PICKED_FORK);
 	
 	pthread_mutex_lock(props->philosopher.left_fork);
-	printf("%zu %zu has taken a fork\n", \
-		get_time_from_start(props->philo), props->philosopher.number);
+	mutex_print(props->philo, &props->philosopher, PHILO_PICKED_FORK);
 
 	//? Then, the philosopher will be eating
-	printf("%zu %zu is eating\n", \
-		get_time_from_start(props->philo), props->philosopher.number);
+	mutex_print(props->philo, &props->philosopher, PHILO_EATING);
 	props->philosopher.last_meal_time = get_time_in_ms();
 	ft_usleep(props->philo->time_to_eat);
 	
@@ -47,17 +44,13 @@ static void	eating(t_philo_loop_props	*props)
 
 static void	sleeping(t_philo_loop_props	*props)
 {
-	//? Then, the philosopher will be sleeping
-	printf("%zu %zu is sleeping\n", \
-		get_time_from_start(props->philo), props->philosopher.number);
+	mutex_print(props->philo, &props->philosopher, PHILO_SLEEPING);
 	ft_usleep(props->philo->time_to_sleep);
 }
 
 static void	think(t_philo_loop_props	*props)
 {
-	//? And then finally, the philosopher will be thinking
-	printf("%zu %zu is thinking\n", \
-		get_time_from_start(props->philo), props->philosopher.number);
+	mutex_print(props->philo, &props->philosopher, PHILO_THINKING);
 	if (props->philosopher.number % 2)
 		ft_usleep(props->philo->time_to_eat / 10);
 }
@@ -84,8 +77,7 @@ void	*philosopher_loop(void *p)
 		think(props);
 	}
 		
-	printf("%zu %zu died\n", \
-		get_time_from_start(props->philo), props->philosopher.number);
+	mutex_print(props->philo, &props->philosopher, PHILO_DIED);
 	return (NULL);
 }
 

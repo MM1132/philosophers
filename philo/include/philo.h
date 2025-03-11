@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 02:24:15 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/07 15:08:17 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:35:11 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ typedef struct s_list
 
 typedef enum e_philo_state
 {
+	PHILO_PICKED_FORK,
 	PHILO_EATING,
 	PHILO_SLEEPING,
 	PHILO_THINKING,
+	PHILO_DIED,
 }	t_philo_state;
 
 typedef struct s_philo
@@ -47,6 +49,7 @@ typedef struct s_philo
 	size_t			elapsed_time_ms;
 	t_list			*allocs;
 	pthread_mutex_t	*fork_mutexes;
+	pthread_mutex_t	print_mutex;
 	pthread_t		*philosophers;
 }					t_philo;
 
@@ -64,6 +67,8 @@ typedef struct s_philo_loop_props
 	t_philosopher	philosopher;
 }					t_philo_loop_props;
 
+void	mutex_print(t_philo *philo, t_philosopher *philosopher, \
+	t_philo_state philo_state);
 void	sleep_until_time(size_t	target_time);
 void	ft_usleep(size_t sleep_time);
 size_t	get_time_from_start(t_philo *philo);

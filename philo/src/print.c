@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rreimann <rreimann@42heilbronn.de>         +#+  +:+       +#+        */
+/*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:18:31 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/06 23:02:31 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:29:08 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,24 @@ void	print_philo_data(t_philo *philo)
 	printf("the long one: %zu\n",
 		philo->number_of_times_each_philosopher_must_eat);
 	printf("start_time_ms: %zu\n", philo->start_time_ms);
+}
+
+void	mutex_print(t_philo *philo, t_philosopher *philosopher, \
+		t_philo_state philo_state)
+{
+	size_t	elapsed_time;
+
+	pthread_mutex_lock(&philo->print_mutex);
+	elapsed_time = get_time_from_start(philo);
+	if (philo_state == PHILO_PICKED_FORK)
+		printf("%zu %zu has taken a fork\n", elapsed_time, philosopher->number);
+	else if (philo_state == PHILO_EATING)
+		printf("%zu %zu is eating\n", elapsed_time, philosopher->number);
+	else if (philo_state == PHILO_SLEEPING)
+		printf("%zu %zu is sleeping\n", elapsed_time, philosopher->number);
+	else if (philo_state == PHILO_THINKING)
+		printf("%zu %zu is thinking\n", elapsed_time, philosopher->number);
+	else if (philo_state == PHILO_DIED)
+		printf("%zu %zu died\n", elapsed_time, philosopher->number);
+	pthread_mutex_unlock(&philo->print_mutex);
 }

@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 22:44:19 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/07 14:44:34 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:36:28 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ static void	philo_pthread_init(t_philo *philo)
 			gc_exit(philo, EXIT_FAILURE);
 		index++;
 	}
+	err = pthread_mutex_init(&philo->print_mutex, NULL);
+	if (err != 0)
+		gc_exit(philo, EXIT_FAILURE);
 }
 
 // Get all the arguments and init the global struct for `philo`
