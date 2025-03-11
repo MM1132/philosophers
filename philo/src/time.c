@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 19:48:28 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/07 12:32:03 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/11 19:24:14 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ size_t	get_time_in_ms(void)
 }
 
 // Increment the time of philo by a millisecond after every ms
-void	*time_counter(void *props)
+void	*death_checking_loop(void *props)
 {
 	t_philo	*philo;
 	int		err;

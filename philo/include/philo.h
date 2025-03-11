@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 02:24:15 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/11 17:35:11 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:40:22 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	mutex_print(t_philo *philo, t_philosopher *philosopher, \
 void	sleep_until_time(size_t	target_time);
 void	ft_usleep(size_t sleep_time);
 size_t	get_time_from_start(t_philo *philo);
-void	*time_counter(void *props);
+void	*death_checking_loop(void *props);
 void	*philosopher_loop(void *p);
 void	print_philo_data(t_philo *philo);
 size_t	get_time_in_ms(void);

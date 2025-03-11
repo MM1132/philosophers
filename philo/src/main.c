@@ -6,18 +6,18 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 21:40:16 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/11 17:37:59 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:40:22 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-pthread_t	start_time_thread(t_philo *philo)
+pthread_t	start_death_thread(t_philo *philo)
 {
-	pthread_t			time_thread;
+	pthread_t			death_thread;
 
-	pthread_create(&time_thread, NULL, time_counter, (void *) philo);
-	return (time_thread);
+	pthread_create(&death_thread, NULL, death_checking_loop, (void *) philo);
+	return (death_thread);
 }
 
 void	start_philo_threads(t_philo *philo)
@@ -61,11 +61,11 @@ void	start_philo_threads(t_philo *philo)
 void	start(t_philo *philo)
 {
 	size_t		index;
-	pthread_t	time_thread;
+	pthread_t	death_thread;
 
-	time_thread = start_time_thread(philo);
+	death_thread = start_death_thread(philo);
 	start_philo_threads(philo);
-	pthread_join(time_thread, NULL);
+	pthread_join(death_thread, NULL);
 	index = 0;
 	while (index < philo->number_of_philosophers)
 	{
