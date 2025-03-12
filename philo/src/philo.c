@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:18:05 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/12 16:56:53 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:27:12 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ static void	eating(t_philo_loop_props	*props)
 {
 	pthread_mutex_lock(props->philosopher->right_fork);
 	mutex_print(props->philo, props->philosopher, PHILO_PICKED_FORK);
+	if (props->philo->number_of_philosophers == 1)
+	{
+		return ;
+		pthread_mutex_unlock(props->philosopher->right_fork);
+	}
 	pthread_mutex_lock(props->philosopher->left_fork);
 	mutex_print(props->philo, props->philosopher, PHILO_PICKED_FORK);
 	props->philosopher->times_eaten++;
@@ -52,8 +57,12 @@ void	*philosopher_loop(void *p)
 	while (true)
 	{
 		if (props->philo->stop_threads == true)
+		{
 			return (NULL);
+		}
 		eating(props);
+		if (props->philo->number_of_philosophers == 1)
+			return (NULL);
 		sleeping(props);
 		think(props);
 	}
