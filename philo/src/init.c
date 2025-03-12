@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 22:44:19 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/12 16:57:45 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:36:52 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ t_philo	init_philo(int argc, char **argv)
 	if (argc == 5 || argc == 6)
 	{
 		philo.number_of_philosophers = ft_atoi(argv[1]);
+		if (philo.number_of_philosophers == 0)
+			err_exit("ERROR: Zero philosophers is not allowed\n");
 		philo.time_to_die = ft_atoi(argv[2]);
 		philo.time_to_eat = ft_atoi(argv[3]);
 		philo.time_to_sleep = ft_atoi(argv[4]);
