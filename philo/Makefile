@@ -16,10 +16,12 @@ SRC_FILES := \
 	$(SRC_DIR)/libft/linked_list/part1.c \
 	$(SRC_DIR)/libft/linked_list/part2.c \
 	$(SRC_DIR)/libft/ft_atoi.c \
+	$(SRC_DIR)/death_checker.c \
 	$(SRC_DIR)/init.c \
 	$(SRC_DIR)/main.c \
 	$(SRC_DIR)/philo.c \
 	$(SRC_DIR)/print.c \
+	$(SRC_DIR)/start.c \
 	$(SRC_DIR)/time.c
 OBJ_FILES := $(SRC_FILES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

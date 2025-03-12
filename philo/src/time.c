@@ -6,11 +6,16 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 19:48:28 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/11 19:24:14 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:26:46 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+size_t	get_time_from_ms(size_t	time_ms)
+{
+	return (get_time_in_ms() - time_ms);
+}
 
 size_t	get_time_from_start(t_philo *philo)
 {
@@ -23,24 +28,6 @@ size_t	get_time_in_ms(void)
 
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
-}
-
-// Increment the time of philo by a millisecond after every ms
-void	*death_checking_loop(void *props)
-{
-	t_philo	*philo;
-	int		err;
-
-	philo = (t_philo *)props;
-	while (true)
-	{
-		err = usleep(1000);
-		if (err != 0)
-			return (NULL);
-		if (philo->elapsed_time_ms >= 10000)
-			break ;
-	}
-	return (NULL);
 }
 
 void	ft_usleep(size_t sleep_time)

@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 02:24:15 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/11 18:40:22 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:26:44 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,16 @@ typedef enum e_philo_state
 	PHILO_DIED,
 }	t_philo_state;
 
+typedef struct s_philosopher
+{
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
+	size_t			number;
+	size_t			index;
+	size_t			last_meal_time;
+	pthread_t		thread;
+}					t_philosopher;
+
 typedef struct s_philo
 {
 	size_t			number_of_philosophers;
@@ -50,21 +60,13 @@ typedef struct s_philo
 	t_list			*allocs;
 	pthread_mutex_t	*fork_mutexes;
 	pthread_mutex_t	print_mutex;
-	pthread_t		*philosophers;
+	t_philosopher	*philos;
 }					t_philo;
-
-typedef struct s_philosopher
-{
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
-	size_t			number;
-	size_t			last_meal_time;
-}					t_philosopher;
 
 typedef struct s_philo_loop_props
 {
 	t_philo			*philo;
-	t_philosopher	philosopher;
+	t_philosopher	*philosopher;
 }					t_philo_loop_props;
 
 void	mutex_print(t_philo *philo, t_philosopher *philosopher, \
@@ -77,6 +79,10 @@ void	*philosopher_loop(void *p);
 void	print_philo_data(t_philo *philo);
 size_t	get_time_in_ms(void);
 t_philo	init_philo(int argc, char **argv);
+void	start(t_philo *philo);
+void	err_exit(char *err_msg);
+void	*death_checking_loop(void *props);
+size_t	get_time_from_ms(size_t	time_ms);
 
 // GARBAGE COLLECTOR
 

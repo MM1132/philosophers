@@ -6,29 +6,39 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 22:44:19 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/11 17:36:28 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:40:37 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// Exists the program as a FAILURE with a message
-static void	err_exit(char *err_msg)
+static void	init_philosophers(t_philo *philo)
 {
-	printf("%s", err_msg);
-	exit(EXIT_FAILURE);
-}
+	size_t	index;
+	int		left_index;
+	int		right_index;
+	int		tmp_index;
 
-// Checks if there is the correct number of arguments
-// And if all of the arguments can be converted into numbers
-static void	check_args(int argc, char **argv)
-{
-	if (!(argc == 5 || argc == 6))
-		err_exit("ERROR: Only enter either 4 or 5 arguments\n");
-	if (!(ft_isposdigit_str(argv[1]) && ft_isposdigit_str(argv[2])
-			&& ft_isposdigit_str(argv[3]) && ft_isposdigit_str(argv[4])) || (argc == 6
-			&& !ft_isposdigit_str(argv[5])))
-		err_exit("ERROR: Arguments can only be positive numbers\n");
+	index = 0;
+	while (index < philo->number_of_philosophers)
+	{
+		philo->philos[index].number = index + 1;
+		philo->philos[index].index = index;
+		philo->philos[index].last_meal_time = get_time_in_ms();
+		left_index = index - 1;
+		if (left_index < 0)
+			left_index = philo->number_of_philosophers - 1;
+		right_index = index;
+		if (index % 2)
+		{
+			tmp_index = left_index;
+			left_index = right_index;
+			right_index = tmp_index;
+		}
+		philo->philos[index].left_fork = &philo->fork_mutexes[left_index];
+		philo->philos[index].right_fork = &philo->fork_mutexes[right_index];
+		index++;
+	}
 }
 
 static void	philo_pthread_init(t_philo *philo)
@@ -36,8 +46,6 @@ static void	philo_pthread_init(t_philo *philo)
 	size_t	index;
 	int		err;
 
-	philo->philosophers = gc_malloc(philo, \
-		sizeof(pthread_t) * philo->number_of_philosophers);
 	philo->fork_mutexes = gc_malloc(philo, \
 		sizeof(pthread_mutex_t) * philo->number_of_philosophers);
 	index = 0;
@@ -51,6 +59,21 @@ static void	philo_pthread_init(t_philo *philo)
 	err = pthread_mutex_init(&philo->print_mutex, NULL);
 	if (err != 0)
 		gc_exit(philo, EXIT_FAILURE);
+	philo->philos = gc_malloc(philo, \
+		sizeof(t_philosopher) * philo->number_of_philosophers);
+	init_philosophers(philo);
+}
+
+// Checks if there is the correct number of arguments
+// And if all of the arguments can be converted into numbers
+static void	check_args(int argc, char **argv)
+{
+	if (!(argc == 5 || argc == 6))
+		err_exit("ERROR: Only enter either 4 or 5 arguments\n");
+	if (!(ft_isposdigit_str(argv[1]) && ft_isposdigit_str(argv[2])
+			&& ft_isposdigit_str(argv[3]) && ft_isposdigit_str(argv[4])) || (argc == 6
+			&& !ft_isposdigit_str(argv[5])))
+		err_exit("ERROR: Arguments can only be positive numbers\n");
 }
 
 // Get all the arguments and init the global struct for `philo`

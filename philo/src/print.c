@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:18:31 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/11 18:29:08 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:33:25 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,11 @@ void	mutex_print(t_philo *philo, t_philosopher *philosopher, \
 	else if (philo_state == PHILO_DIED)
 		printf("%zu %zu died\n", elapsed_time, philosopher->number);
 	pthread_mutex_unlock(&philo->print_mutex);
+}
+
+// Exists the program as a FAILURE with a message
+void	err_exit(char *err_msg)
+{
+	printf("%s", err_msg);
+	exit(EXIT_FAILURE);
 }
