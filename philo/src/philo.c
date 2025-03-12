@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:18:05 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/12 14:24:27 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:34:53 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	eating(t_philo_loop_props	*props)
 	mutex_print(props->philo, props->philosopher, PHILO_EATING);
 	props->philosopher->last_meal_time = get_time_in_ms();
 	ft_usleep(props->philo->time_to_eat);
-	
+
 	pthread_mutex_unlock(props->philosopher->right_fork);
 	pthread_mutex_unlock(props->philosopher->left_fork);
 }
@@ -39,8 +39,6 @@ static void	sleeping(t_philo_loop_props	*props)
 static void	think(t_philo_loop_props	*props)
 {
 	mutex_print(props->philo, props->philosopher, PHILO_THINKING);
-	if (props->philosopher->number % 2)
-		ft_usleep(props->philo->time_to_eat / 10);
 }
 
 // It needs the number of the philosopher
@@ -57,14 +55,18 @@ void	*philosopher_loop(void *p)
 
 	props->philosopher->last_meal_time = get_time_in_ms();
 
+	if (props->philosopher->number % 2)
+		ft_usleep(2);
+	think(props);
 	while (true)
 	{
+		// printf("stop_threads: %d\n", props->philo->stop_threads);
+		if (props->philo->stop_threads == true)
+			return (NULL);
 		eating(props);
 		sleeping(props);
 		think(props);
 	}
-		
-	mutex_print(props->philo, props->philosopher, PHILO_DIED);
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 14:25:14 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/12 14:45:43 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 15:39:15 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	*death_checking_loop(void *props)
 		err = usleep(100);
 		if (err != 0)
 			return (NULL);
-		if (get_time_from_ms(philo->philos[index].last_meal_time) > \
-			philo->time_to_die)
+		if (get_time_from_ms(philo->philos[index].last_meal_time) > philo->time_to_die)
 		{
 			mutex_print(philo, &philo->philos[index], PHILO_DIED);
+			return (NULL);
 		}
 		index++;
 		if (index >= philo->number_of_philosophers)

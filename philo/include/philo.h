@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 02:24:15 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/12 14:26:44 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:50:27 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_philo
 	pthread_mutex_t	*fork_mutexes;
 	pthread_mutex_t	print_mutex;
 	t_philosopher	*philos;
+	bool			stop_threads;
 }					t_philo;
 
 typedef struct s_philo_loop_props
