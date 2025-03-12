@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 21:40:16 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/12 13:25:09 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:44:22 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	main(int argc, char **argv)
 	// print_philo_data(&philo);
 	start(&philo);
 
+	destroy_mutexes(&philo);
 	gc_free_all(&philo);
 	return (0);
 }

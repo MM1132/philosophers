@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rreimann <rreimann@42heilbronn.de>         +#+  +:+       +#+        */
+/*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 03:19:26 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/06 18:32:04 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:45:45 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,22 @@ void	gc_exit(t_philo *philo, int exit_status)
 {
 	gc_free_all(philo);
 	exit(exit_status);
+}
+
+void	destroy_mutexes(t_philo *philo)
+{
+	size_t	index;
+	int		err;
+
+	index = 0;
+	while (index < philo->number_of_philosophers)
+	{
+		err = pthread_mutex_destroy(&philo->fork_mutexes[index]);
+		if (err != 0)
+			gc_exit(philo, EXIT_FAILURE);
+		index++;
+	}
+	err = pthread_mutex_destroy(&philo->print_mutex);
+	if (err != 0)
+		gc_exit(philo, EXIT_FAILURE);
 }

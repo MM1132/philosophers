@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 02:24:15 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/12 16:22:07 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:45:57 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	start(t_philo *philo);
 void	err_exit(char *err_msg);
 void	*death_checking_loop(void *props);
 size_t	get_time_from_ms(size_t	time_ms);
+void	destroy_mutexes(t_philo *philo);
 
 // GARBAGE COLLECTOR
 
