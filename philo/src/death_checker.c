@@ -6,11 +6,28 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 14:25:14 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/12 15:39:15 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:30:04 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+bool	has_each_philo_eaten_enough(t_philo *philo)
+{
+	size_t	index;
+	size_t	counter;
+
+	counter = 0;
+	index = 0;
+	while (index < philo->number_of_philosophers)
+	{
+		if (philo->philos[index].times_eaten >= \
+			philo->number_of_times_each_philosopher_must_eat)
+			counter++;
+		index++;
+	}
+	return (counter == philo->number_of_philosophers);
+}
 
 void	*death_checking_loop(void *props)
 {
@@ -26,13 +43,14 @@ void	*death_checking_loop(void *props)
 		if (err != 0)
 			return (NULL);
 		if (get_time_from_ms(philo->philos[index].last_meal_time) > philo->time_to_die)
+			return (mutex_print(philo, &philo->philos[index], PHILO_DIED), NULL);
+		if (++index >= philo->number_of_philosophers)
 		{
-			mutex_print(philo, &philo->philos[index], PHILO_DIED);
-			return (NULL);
-		}
-		index++;
-		if (index >= philo->number_of_philosophers)
+			if (philo->number_of_times_each_philosopher_must_eat != -1 && \
+				has_each_philo_eaten_enough(philo))
+				return (philo->stop_threads = true, NULL);
 			index = 0;
+		}
 	}
 	return (NULL);
 }

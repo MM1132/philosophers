@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:18:05 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/12 15:34:53 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:12:04 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	eating(t_philo_loop_props	*props)
 	mutex_print(props->philo, props->philosopher, PHILO_PICKED_FORK);
 
 	//? Then, the philosopher will be eating
+	props->philosopher->times_eaten++;
 	mutex_print(props->philo, props->philosopher, PHILO_EATING);
 	props->philosopher->last_meal_time = get_time_in_ms();
 	ft_usleep(props->philo->time_to_eat);

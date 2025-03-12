@@ -6,18 +6,26 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 22:44:19 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/12 15:21:04 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:12:51 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static void	swap_int(int *n1, int *n2)
+{
+	int	save;
+
+	save = *n1;
+	*n1 = *n2;
+	*n2 = save;
+}
 
 static void	init_philosophers(t_philo *philo)
 {
 	size_t	index;
 	int		left_index;
 	int		right_index;
-	int		tmp_index;
 
 	index = 0;
 	while (index < philo->number_of_philosophers)
@@ -25,16 +33,13 @@ static void	init_philosophers(t_philo *philo)
 		philo->philos[index].number = index + 1;
 		philo->philos[index].index = index;
 		philo->philos[index].last_meal_time = get_time_in_ms();
+		philo->philos[index].times_eaten = 0;
 		left_index = index - 1;
 		if (left_index < 0)
 			left_index = philo->number_of_philosophers - 1;
 		right_index = index;
 		if (index % 2)
-		{
-			tmp_index = left_index;
-			left_index = right_index;
-			right_index = tmp_index;
-		}
+			swap_int(&left_index, &right_index);
 		philo->philos[index].left_fork = &philo->fork_mutexes[left_index];
 		philo->philos[index].right_fork = &philo->fork_mutexes[right_index];
 		index++;
@@ -91,7 +96,7 @@ t_philo	init_philo(int argc, char **argv)
 		philo.time_to_eat = ft_atoi(argv[3]);
 		philo.time_to_sleep = ft_atoi(argv[4]);
 	}
-	philo.number_of_times_each_philosopher_must_eat = 0;
+	philo.number_of_times_each_philosopher_must_eat = -1;
 	if (argc == 6)
 		philo.number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
 	philo.allocs = NULL;

@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 02:24:15 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/12 14:50:27 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:22:07 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_philosopher
 	size_t			index;
 	size_t			last_meal_time;
 	pthread_t		thread;
+	long			times_eaten;
 }					t_philosopher;
 
 typedef struct s_philo
@@ -54,7 +55,7 @@ typedef struct s_philo
 	size_t			time_to_die;
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
-	size_t			number_of_times_each_philosopher_must_eat;
+	long			number_of_times_each_philosopher_must_eat;
 	size_t			start_time_ms;
 	size_t			elapsed_time_ms;
 	t_list			*allocs;
