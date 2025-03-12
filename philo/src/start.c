@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 13:24:32 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/12 16:43:23 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:58:45 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	start(t_philo *philo)
 	while (index < philo->number_of_philosophers)
 	{
 		pthread_join(philo->philos[index].thread, NULL);
-		printf("Joined philosopher %zu\n", index);
 		index++;
 	}
 }

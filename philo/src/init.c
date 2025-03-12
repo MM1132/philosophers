@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 22:44:19 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/12 16:12:51 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:57:45 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ static void	check_args(int argc, char **argv)
 	if (!(argc == 5 || argc == 6))
 		err_exit("ERROR: Only enter either 4 or 5 arguments\n");
 	if (!(ft_isposdigit_str(argv[1]) && ft_isposdigit_str(argv[2])
-			&& ft_isposdigit_str(argv[3]) && ft_isposdigit_str(argv[4])) || (argc == 6
-			&& !ft_isposdigit_str(argv[5])))
+			&& ft_isposdigit_str(argv[3]) && ft_isposdigit_str(argv[4])) || \
+			(argc == 6 && !ft_isposdigit_str(argv[5])))
 		err_exit("ERROR: Arguments can only be positive numbers\n");
 }
 

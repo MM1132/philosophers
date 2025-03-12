@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 20:18:31 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/12 15:41:14 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:57:05 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	mutex_print(t_philo *philo, t_philosopher *philosopher, \
 	{
 		elapsed_time = get_time_from_start(philo);
 		if (philo_state == PHILO_PICKED_FORK)
-			printf("%zu %zu has taken a fork\n", elapsed_time, philosopher->number);
+			printf("%zu %zu has taken a fork\n", elapsed_time, \
+				philosopher->number);
 		else if (philo_state == PHILO_EATING)
 			printf("%zu %zu is eating\n", elapsed_time, philosopher->number);
 		else if (philo_state == PHILO_SLEEPING)

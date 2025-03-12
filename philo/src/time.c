@@ -6,7 +6,7 @@
 /*   By: rreimann <rreimann@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 19:48:28 by rreimann          #+#    #+#             */
-/*   Updated: 2025/03/12 14:26:46 by rreimann         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:57:26 by rreimann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ size_t	get_time_in_ms(void)
 
 void	ft_usleep(size_t sleep_time)
 {
-    size_t	start_time;
-	
+	size_t	start_time;
+
 	start_time = get_time_in_ms();
 	while ((get_time_in_ms() - start_time) < sleep_time)
 		usleep(100);
